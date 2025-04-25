@@ -28,16 +28,27 @@
       font-weight: 300;
       margin-top: 0.75rem;
     }
+
     .section {
       padding: 2rem;
       max-width: 900px;
       margin: 0 auto;
       text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
     }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .section h2 {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
+
     .btn {
       display: inline-block;
       margin: 1rem 0.5rem;
@@ -48,22 +59,19 @@
       border-radius: 8px;
       font-weight: bold;
       text-align: center;
+      transition: background-color 0.3s ease;
     }
+
+    .btn:hover {
+      background-color: #333;
+    }
+
     .footer {
       text-align: center;
       padding: 2rem;
       background-color: #eee;
       margin-top: 2rem;
       font-size: 0.9rem;
-    }
-
-    /* Fade-in animation */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .fade-in {
-      animation: fadeIn 1s ease-out;
     }
   </style>
 </head>
@@ -78,14 +86,14 @@
     <p>Airport rides for travelers with boards, bags, and sticks.</p>
   </header>
 
-  <section class="section">
+  <section class="section" style="background-color: #fafafa;">
     <h2>Private Rides for Gear-Heavy Travelers</h2>
     <p>We’re not your average rideshare. StickShift connects you with SUV drivers who understand how to haul your surfboards, snowboards, golf clubs, and oversized gear — safely, cleanly, and on time. No stress, no trunk Tetris.</p>
     <a href="https://docs.google.com/forms/d/1rKfyyZB4hTksNfScOvYw2KVofpk-yF0fUEemWPjIxP0/viewform" class="btn" target="_blank">Book a Ride</a>
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdSQNgb6ja-jMk0YOlP2efxKgtqWon1jqL5NYW5JUA30FFQKA/viewform" class="btn" target="_blank">Apply to Drive</a>
   </section>
 
-  <section class="section">
+  <section class="section" style="background-color: #fff;">
     <h2>Why StickShift?</h2>
     <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
       <li>✅ Guaranteed room for your gear</li>
@@ -99,6 +107,22 @@
   <footer class="footer">
     © 2025 StickShift. All rights reserved.
   </footer>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
 
 </body>
 </html>
